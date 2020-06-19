@@ -29,15 +29,19 @@ var mainPinActivYValue = mainPinYValue + Math.floor(mainPinHeight / 2) + 22;
 var addressField = postForm.querySelector('#address');
 var titleInput = postForm.querySelector('#title');
 var roomsNumber = postForm.querySelector('#room_number');
-var roomsNumberItems = roomsNumber.options;
 var capacity = postForm.querySelector('#capacity');
-var capacityItems = capacity.options;
-// var roomsCapacity = {
-//   '1': 1,
-//   '2': 2,
-//   '3': 3,
-//   '100': 0,
-// };
+var roomsCapacity = {
+  '1': 1,
+  '2': 2,
+  '3': 3,
+  '100': 0,
+};
+var roomsCapacityError = {
+  '1': 'Не более одного гостя!',
+  '2': 'Не более двух гостей!',
+  '3': 'Не более трех гостей!',
+  '100': 'Только не для гостей!',
+};
 
 function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
@@ -129,6 +133,15 @@ function enableFormElements(formElements) {
   }
 }
 
+function addPins(pins) {
+  var fragment = document.createDocumentFragment();
+
+  for (var n = 0; n < pins.length; n++) {
+    fragment.appendChild(renderPin(pins[n]));
+  }
+  mapPins.appendChild(fragment);
+}
+
 function activateMap() {
   map.classList.remove('map--faded');
   postForm.classList.remove('ad-form--disabled');
@@ -137,13 +150,7 @@ function activateMap() {
   addressField.value = mainPinXValue + ', ' + mainPinActivYValue;
   mainPin.removeEventListener('mousedown', mouseClick);
   mainPin.removeEventListener('keydown', enterClick);
-
-  var fragment = document.createDocumentFragment();
-
-  for (var n = 0; n < NUMBER_OF_PINS; n++) {
-    fragment.appendChild(renderPin(newPosts[n]));
-  }
-  mapPins.appendChild(fragment);
+  addPins(newPosts);
 }
 
 function mouseClick(evt) {
@@ -159,7 +166,18 @@ function enterClick(evt) {
   }
 }
 
+function changeRoomsCapacity() {
+  if (capacity.value > roomsCapacity[roomsNumber.value]) {
+    capacity.setCustomValidity(roomsCapacityError[roomsNumber.value]);
+  } else if (roomsNumber.value === '100' && capacity.value > roomsCapacity[roomsNumber.value]) {
+    capacity.setCustomValidity(roomsCapacityError[roomsNumber.value]);
+  } else {
+    capacity.setCustomValidity('');
+  }
+}
+
 function init() {
+  map.classList.add('map--faded');
 
   disableFormElements(postFormFields);
   disableFormElements(mapFilterFormFields);
@@ -181,40 +199,9 @@ function init() {
     }
   });
 
-  roomsNumber.addEventListener('change', function () {
-    var selectedItem = roomsNumber.selectedIndex;
+  capacity.addEventListener('change', changeRoomsCapacity);
 
-    // ------------ Пока оставлю как сделал, не придумал как через объект.------------------------
-
-    // var checkedRoomValue = roomsNumber[selectedItem].value;
-    // var checkedRoom = roomsCapacity[checkedRoomValue];
-
-    // for (var o = 0; o < capacityItems.length; o++) {
-    //   var capacityValue = capacityItems[o].value;
-
-    //   capacityItems[o].setAttribute('disabled', true);
-
-    // }
-
-    // for (var p = 0; p < checkedRoom.length; p++) {
-    //   capacityItems[checkedRoom[p]].removeAttribute('disabled');
-    // }
-    if (roomsNumberItems[selectedItem].value === '100') {
-      for (var o = 0; o < capacityItems.length; o++) {
-        capacityItems[o].removeAttribute('disabled');
-        if (capacityItems[o].value !== '0') {
-          capacityItems[o].setAttribute('disabled', true);
-        }
-      }
-    } else {
-      for (var p = 0; p < capacityItems.length; p++) {
-        capacityItems[p].removeAttribute('disabled');
-        if (capacityItems[p].value === '0' || roomsNumberItems[selectedItem].value < capacityItems[p].value) {
-          capacityItems[p].setAttribute('disabled', true);
-        }
-      }
-    }
-  });
+  roomsNumber.addEventListener('change', changeRoomsCapacity);
 }
 
 init();
