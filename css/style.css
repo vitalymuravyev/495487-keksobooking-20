@@ -1249,3 +1249,17 @@ fieldset {
 .hidden {
   display: none;
 }
+
+.net__error__message {
+  position: absolute;
+  z-index: 100;
+  width: 100%;
+  top: 200px;
+
+
+  background-color: #2aa59f;
+  opacity: 0.8;
+  text-align: center;
+  padding: 20px;
+  font-size: 25px;
+}
