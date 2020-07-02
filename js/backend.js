@@ -1,20 +1,25 @@
 'use strict';
 
 (function () {
-  var URL_LOAD = 'https://javascript.pages.academy/keksobooking1/data';
+  var URL_LOAD = 'https://javascript.pages.academy/keksobooking/data';
   var StatusCode = {
     OK: 200
   };
 
-  var errorPopup = document.querySelector('.net__error__message');
+  var map = document.querySelector('.map');
+  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
+  var errorPopup = errorTemplate.cloneNode(true);
+  var errorPopupText = errorPopup.querySelector('.error__message');
+  var errorPopupButton = errorPopup.querySelector('.error__button');
 
   function onError(errorMessage) {
-    errorPopup.textContent = errorMessage;
-    errorPopup.classList.remove('hidden');
+    errorPopupText.textContent = errorMessage;
+    map.appendChild(errorPopup);
 
-    errorPopup.addEventListener('click', function () {
-      errorPopup.classList.add('hidden');
+    errorPopupButton.addEventListener('click', function () {
+      errorPopup.remove();
     });
+
   }
 
   window.backend = {
