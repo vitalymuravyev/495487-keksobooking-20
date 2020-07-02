@@ -24,7 +24,8 @@
     addressField.value = mainPinXValue + ', ' + mainPinActivYValue;
     mainPin.removeEventListener('mousedown', window.map.mouseClick);
     mainPin.removeEventListener('keydown', window.map.enterClick);
-    window.pins.addPins(window.newPosts);
+    // window.pins.addPins(window.newPosts);
+    window.backend.load(window.pins.addPins);
   }
 
   window.map = {
