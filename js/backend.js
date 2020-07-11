@@ -11,6 +11,8 @@
   var errorPopup = errorTemplate.cloneNode(true);
   var errorPopupText = errorPopup.querySelector('.error__message');
   var errorPopupButton = errorPopup.querySelector('.error__button');
+  var mapFilterForm = document.querySelector('.map__filters');
+  var mapFilterFormFields = mapFilterForm.children;
 
   function onError(errorMessage) {
     errorPopupText.textContent = errorMessage;
@@ -32,6 +34,7 @@
         try {
           if (xhr.status === StatusCode.OK) {
             onLoad(xhr.response);
+            window.form.enableFormElements(mapFilterFormFields);
           } else {
             throw new Error(xhr.statusText);
           }

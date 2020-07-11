@@ -3,7 +3,7 @@
 (function () {
   var MIN_Y = 130;
   var MAX_Y = 630;
-  var NUMBER_OF_PINS = 8;
+  var NUMBER_OF_PINS = 5;
   var HOME_TYPE = ['palace', 'flat', 'house', 'bungalo'];
   var HOME_FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
   var CHECK_TIME = ['12:00', '13:00', '14:00'];

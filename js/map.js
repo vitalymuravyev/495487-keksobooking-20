@@ -6,27 +6,42 @@
   var postForm = document.querySelector('.ad-form');
   var postFormFields = postForm.querySelectorAll('fieldset');
   var addressField = postForm.querySelector('#address');
-  var mapFilterForm = document.querySelector('.map__filters');
-  var mapFilterFormFields = mapFilterForm.children;
   var mainPin = map.querySelector('.map__pin--main');
   var mainPinWidth = mainPin.offsetWidth;
   var mainPinHeight = mainPin.offsetHeight;
   var mainPinXValue = parseInt(mainPin.style.left, 10) + Math.floor(mainPinWidth / 2);
   var mainPinYValue = parseInt(mainPin.style.top, 10) + Math.floor(mainPinHeight / 2);
   var mainPinActivYValue = mainPinYValue + Math.floor(mainPinHeight / 2) + 22;
+  var housingType = document.querySelector('#housing-type');
 
+  var newPins = [];
+
+  function addPins(data) {
+    window.renderPins(data);
+  }
+
+  function successHandler(data) {
+    newPins = data;
+    addPins(newPins);
+  }
 
   function activateMap() {
     map.classList.remove('map--faded');
     postForm.classList.remove('ad-form--disabled');
     window.form.enableFormElements(postFormFields);
-    window.form.enableFormElements(mapFilterFormFields);
     addressField.value = mainPinXValue + ', ' + mainPinActivYValue;
     mainPin.removeEventListener('mousedown', window.map.mouseClick);
     mainPin.removeEventListener('keydown', window.map.enterClick);
-    // window.pins.addPins(window.newPosts);
-    window.backend.load(window.pins.addPins);
+
+    window.backend.load(successHandler);
   }
+
+  housingType.addEventListener('change', function (evt) {
+    var newArr = newPins.filter(function (item) {
+      return item.offer.type === evt.target.value;
+    });
+    addPins(newArr);
+  });
 
   window.map = {
 
