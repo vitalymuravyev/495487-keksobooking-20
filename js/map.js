@@ -21,7 +21,7 @@
   }
 
   function successHandler(data) {
-    newPins = data;
+    newPins = data.slice();
     addPins(newPins);
   }
 
@@ -37,7 +37,7 @@
   }
 
   housingType.addEventListener('change', function (evt) {
-    var newArr = newPins.filter(function (item) {
+    var newArr = newPins.slice().filter(function (item) {
       return item.offer.type === evt.target.value;
     });
     addPins(newArr);
