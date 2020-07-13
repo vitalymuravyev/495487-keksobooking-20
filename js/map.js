@@ -18,6 +18,8 @@
 
   function addPins(data) {
     window.renderPins(data);
+
+    window.makeAdCard(data[2]);
   }
 
   function successHandler(data) {
