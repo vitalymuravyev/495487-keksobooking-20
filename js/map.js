@@ -19,7 +19,7 @@
   function addPins(data) {
     window.renderPins(data);
 
-    window.makeAdCard(data[2]);
+    window.makeAdCard(data[1]);
   }
 
   function successHandler(data) {
