@@ -8,11 +8,6 @@
   var mapFilterForm = document.querySelector('.map__filters');
   var mapFilterFormFields = mapFilterForm.children;
   var mainPin = map.querySelector('.map__pin--main');
-  var mainPinWidth = mainPin.offsetWidth;
-  var mainPinHeight = mainPin.offsetHeight;
-  var mainPinXValue = parseInt(mainPin.style.left, 10) + Math.floor(mainPinWidth / 2);
-  var mainPinYValue = parseInt(mainPin.style.top, 10) + Math.floor(mainPinHeight / 2);
-  var addressField = postForm.querySelector('#address');
   var titleInput = postForm.querySelector('#title');
   var roomsNumber = postForm.querySelector('#room_number');
   var capacity = postForm.querySelector('#capacity');
@@ -23,7 +18,7 @@
     window.form.disableFormElements(postFormFields);
     window.form.disableFormElements(mapFilterFormFields);
 
-    addressField.value = mainPinXValue + ', ' + mainPinYValue;
+    window.form.changeAdressValue();
 
     mainPin.addEventListener('mousedown', window.map.mouseClick);
     mainPin.addEventListener('keydown', window.map.enterClick);
