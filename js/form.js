@@ -48,7 +48,7 @@
 
     changeAdressValue: function () {
       var mainPinXValue = parseInt(mainPin.style.left, 10) + Math.floor(mainPinWidth / 2);
-      var mainPinYValue = parseInt(mainPin.style.top, 10) + Math.floor(mainPinHeight / 2);
+      var mainPinYValue = parseInt(mainPin.style.top, 10) + mainPinHeight;
       addressField.value = mainPinXValue + ', ' + mainPinYValue;
     },
   };

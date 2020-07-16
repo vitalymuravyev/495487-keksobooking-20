@@ -5,17 +5,13 @@
   var map = document.querySelector('.map');
   var postForm = document.querySelector('.ad-form');
   var postFormFields = postForm.querySelectorAll('fieldset');
-  var addressField = postForm.querySelector('#address');
+  // var addressField = postForm.querySelector('#address');
   var mainPin = map.querySelector('.map__pin--main');
   var mainPinWidth = mainPin.offsetWidth;
   var mainPinHeight = mainPin.offsetHeight;
-  var mainPinXValue = parseInt(mainPin.style.left, 10) + Math.floor(mainPinWidth / 2);
-  var mainPinYValue = parseInt(mainPin.style.top, 10) + Math.floor(mainPinHeight / 2);
-  var mainPinActivYValue = mainPinYValue + Math.floor(mainPinHeight / 2) + 22;
-  var mainPinMinX = 0 - Math.floor(mainPinWidth / 2);
-  var mainPinMaxX = map.offsetWidth - Math.floor(mainPinWidth / 2);
-  var mainPinMinY = 130 - Math.floor(mainPinHeight / 2);
-  var mainPinMaxY = 630 - Math.floor(mainPinHeight / 2);
+  // var mainPinXValue = parseInt(mainPin.style.left, 10) + Math.floor(mainPinWidth / 2);
+  // var mainPinYValue = parseInt(mainPin.style.top, 10) + Math.floor(mainPinHeight / 2);
+  // var mainPinActivYValue = mainPinYValue + Math.floor(mainPinHeight / 2) + 22;
   var housingType = document.querySelector('#housing-type');
 
   var newPins = [];
@@ -36,6 +32,11 @@
     };
 
     function onMouseMove(moveEvt) {
+
+      var mainPinMinX = 0 - Math.floor(mainPinWidth / 2);
+      var mainPinMaxX = map.offsetWidth - Math.floor(mainPinWidth / 2);
+      var mainPinMinY = 130 - mainPinHeight;
+      var mainPinMaxY = 630 - mainPinHeight;
 
       var shift = {
         x: startCoordinats.x - moveEvt.clientX,
@@ -80,15 +81,14 @@
     map.classList.remove('map--faded');
     postForm.classList.remove('ad-form--disabled');
     window.form.enableFormElements(postFormFields);
-    addressField.value = mainPinXValue + ', ' + mainPinActivYValue;
+    // addressField.value = mainPinXValue + ', ' + mainPinActivYValue;
+    window.form.changeAdressValue();
     mainPin.removeEventListener('mousedown', window.map.mouseClick);
     mainPin.removeEventListener('keydown', window.map.enterClick);
 
     window.backend.load(successHandler);
 
-    mainPin.addEventListener('mousedown', function (evt) {
-      onMainPinMove(evt);
-    });
+    mainPin.addEventListener('mousedown', onMainPinMove);
   }
 
   housingType.addEventListener('change', function (evt) {
