@@ -17,6 +17,10 @@
     pin.style.top = post.location.y - PIN_HEIGHT + 'px';
     pin.querySelector('img').src = post.author.avatar;
     pin.querySelector('img').alt = post.offer.title;
+
+    pin.addEventListener('click', function () {
+      window.makeAdCard(post);
+    });
     return pin;
   }
 

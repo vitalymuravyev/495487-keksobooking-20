@@ -16,6 +16,9 @@
   var titleInput = postForm.querySelector('#title');
   var roomsNumber = postForm.querySelector('#room_number');
   var capacity = postForm.querySelector('#capacity');
+  var checkinn = postForm.querySelector('#timein');
+  var checkout = postForm.querySelector('#timeout');
+  var type = postForm.querySelector('#type');
 
   function init() {
     map.classList.add('map--faded');
@@ -43,6 +46,16 @@
     capacity.addEventListener('change', window.form.changeRoomsCapacity);
 
     roomsNumber.addEventListener('change', window.form.changeRoomsCapacity);
+
+    checkinn.addEventListener('change', function () {
+      checkout.value = checkinn.value;
+    });
+    checkout.addEventListener('change', function () {
+      checkinn.value = checkout.value;
+    });
+
+    type.addEventListener('change', window.form.changePricePlaceholder);
+
   }
 
   init();

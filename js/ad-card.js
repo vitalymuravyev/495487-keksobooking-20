@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  var map = document.querySelector('.map');
+
   var type = {
     flat: 'Квартира',
     bungalo: 'Бунгало',
@@ -11,7 +13,7 @@
   var cardTemplate = document.querySelector('#card').content.querySelector('.popup');
   var mapFilters = document.querySelector('.map__filters-container');
 
-  function addPhoto(photoArr) {
+  function createPhoto(photoArr) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < photoArr.length; i++) {
       var photo = document.createElement('img');
@@ -26,7 +28,7 @@
     return fragment;
   }
 
-  function addFeatures(featuresArr) {
+  function createFeatures(featuresArr) {
     var fragment = document.createDocumentFragment();
 
     for (var j = 0; j < featuresArr.length; j++) {
@@ -40,8 +42,12 @@
   }
 
   window.makeAdCard = function (ad) {
+    if (map.querySelector('.popup')) {
+      map.querySelector('.popup').remove();
+    }
     var card = cardTemplate.cloneNode(true);
 
+    var closeButton = card.querySelector('.popup__close');
     var photos = card.querySelector('.popup__photos');
     var features = card.querySelector('.popup__features');
 
@@ -62,10 +68,20 @@
     card.querySelector('.popup__avatar').src = ad.author.avatar;
 
     features.innerHTML = '';
-    features.appendChild(addFeatures(ad.offer.features));
+    features.appendChild(createFeatures(ad.offer.features));
 
     photos.innerHTML = '';
-    photos.appendChild(addPhoto(ad.offer.photos));
+    photos.appendChild(createPhoto(ad.offer.photos));
+
+    closeButton.addEventListener('click', function () {
+      card.remove();
+    });
+
+    document.addEventListener('keydown', function (evt) {
+      if (evt.key === 'Escape') {
+        card.remove();
+      }
+    });
 
     mapFilters.before(card);
 

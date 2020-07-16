@@ -17,6 +17,8 @@
     '3': 'Не более трех гостей!',
     '100': 'Только не для гостей!',
   };
+  var type = postForm.querySelector('#type');
+  var price = postForm.querySelector('#price');
 
   window.form = {
     changeRoomsCapacity: function () {
@@ -26,6 +28,23 @@
         capacity.setCustomValidity(roomsCapacityError[roomsNumber.value]);
       } else {
         capacity.setCustomValidity('');
+      }
+    },
+
+    changePricePlaceholder: function () {
+      switch (type.value) {
+        case 'bungalo':
+          price.placeholder = 0;
+          break;
+        case 'flat':
+          price.placeholder = 1000;
+          break;
+        case 'house':
+          price.placeholder = 5000;
+          break;
+        case 'palace':
+          price.placeholder = 10000;
+          break;
       }
     },
 
