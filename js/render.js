@@ -19,7 +19,7 @@
     pin.querySelector('img').alt = post.offer.title;
 
     pin.addEventListener('click', function () {
-      window.makeAdCard(post);
+      window.adCard.makeAdCard(post);
     });
     return pin;
   }

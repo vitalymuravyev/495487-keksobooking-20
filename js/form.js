@@ -3,6 +3,8 @@
 (function () {
 
   var postForm = document.querySelector('.ad-form');
+  var type = postForm.querySelector('#type');
+  var price = postForm.querySelector('#price');
   var roomsNumber = postForm.querySelector('#room_number');
   var capacity = postForm.querySelector('#capacity');
   var roomsCapacity = {
@@ -17,8 +19,13 @@
     '3': 'Не более трех гостей!',
     '100': 'Только не для гостей!',
   };
-  var type = postForm.querySelector('#type');
-  var price = postForm.querySelector('#price');
+  var priceMap = {
+    'bungalo': 0,
+    'flat': 1000,
+    'house': 5000,
+    'palace': 10000,
+  };
+
 
   window.form = {
     changeRoomsCapacity: function () {
@@ -32,20 +39,7 @@
     },
 
     changePricePlaceholder: function () {
-      switch (type.value) {
-        case 'bungalo':
-          price.placeholder = 0;
-          break;
-        case 'flat':
-          price.placeholder = 1000;
-          break;
-        case 'house':
-          price.placeholder = 5000;
-          break;
-        case 'palace':
-          price.placeholder = 10000;
-          break;
-      }
+      price.placeholder = priceMap[type.value];
     },
 
     disableFormElements: function (formElements) {
