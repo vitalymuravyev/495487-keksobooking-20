@@ -3,6 +3,11 @@
 (function () {
 
   var postForm = document.querySelector('.ad-form');
+  var mainPin = document.querySelector('.map__pin--main');
+  var mainPinWidth = mainPin.offsetWidth;
+  var mainPinHeight = mainPin.offsetHeight;
+
+  var addressField = postForm.querySelector('#address');
   var roomsNumber = postForm.querySelector('#room_number');
   var capacity = postForm.querySelector('#capacity');
   var roomsCapacity = {
@@ -39,6 +44,12 @@
       for (var m = 0; m < formElements.length; m++) {
         formElements[m].removeAttribute('disabled');
       }
+    },
+
+    changeAdressValue: function () {
+      var mainPinXValue = parseInt(mainPin.style.left, 10) + Math.floor(mainPinWidth / 2);
+      var mainPinYValue = parseInt(mainPin.style.top, 10) + mainPinHeight;
+      addressField.value = mainPinXValue + ', ' + mainPinYValue;
     },
   };
 })();
