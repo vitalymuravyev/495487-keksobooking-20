@@ -5,21 +5,15 @@
   var map = document.querySelector('.map');
   var postForm = document.querySelector('.ad-form');
   var postFormFields = postForm.querySelectorAll('fieldset');
-  // var addressField = postForm.querySelector('#address');
   var mainPin = map.querySelector('.map__pin--main');
   var mainPinWidth = mainPin.offsetWidth;
   var mainPinHeight = mainPin.offsetHeight;
-  // var mainPinXValue = parseInt(mainPin.style.left, 10) + Math.floor(mainPinWidth / 2);
-  // var mainPinYValue = parseInt(mainPin.style.top, 10) + Math.floor(mainPinHeight / 2);
-  // var mainPinActivYValue = mainPinYValue + Math.floor(mainPinHeight / 2) + 22;
   var housingType = document.querySelector('#housing-type');
 
   var newPins = [];
 
   function addPins(data) {
     window.renderPins(data);
-
-    window.makeAdCard(data[1]);
   }
 
   function successHandler(data) {
@@ -83,7 +77,6 @@
     map.classList.remove('map--faded');
     postForm.classList.remove('ad-form--disabled');
     window.form.enableFormElements(postFormFields);
-    // addressField.value = mainPinXValue + ', ' + mainPinActivYValue;
     window.form.changeAdressValue();
     mainPin.removeEventListener('mousedown', window.map.mouseClick);
     mainPin.removeEventListener('keydown', window.map.enterClick);

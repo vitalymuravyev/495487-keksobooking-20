@@ -3,6 +3,8 @@
 (function () {
 
   var postForm = document.querySelector('.ad-form');
+  var type = postForm.querySelector('#type');
+  var price = postForm.querySelector('#price');
   var mainPin = document.querySelector('.map__pin--main');
   var mainPinWidth = mainPin.offsetWidth;
   var mainPinHeight = mainPin.offsetHeight;
@@ -22,6 +24,13 @@
     '3': 'Не более трех гостей!',
     '100': 'Только не для гостей!',
   };
+  var priceMap = {
+    'bungalo': 0,
+    'flat': 1000,
+    'house': 5000,
+    'palace': 10000,
+  };
+
 
   window.form = {
     changeRoomsCapacity: function () {
@@ -32,6 +41,10 @@
       } else {
         capacity.setCustomValidity('');
       }
+    },
+
+    changePricePlaceholder: function () {
+      price.placeholder = priceMap[type.value];
     },
 
     disableFormElements: function (formElements) {
