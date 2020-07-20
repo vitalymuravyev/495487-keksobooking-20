@@ -15,7 +15,7 @@
   var checkout = postForm.querySelector('#timeout');
   var type = postForm.querySelector('#type');
 
-  function init() {
+  window.init = function () {
     map.classList.add('map--faded');
 
     window.form.disableFormElements(postFormFields);
@@ -51,7 +51,7 @@
 
     type.addEventListener('change', window.form.changePricePlaceholder);
 
-  }
+  };
 
-  init();
+  window.init();
 })();

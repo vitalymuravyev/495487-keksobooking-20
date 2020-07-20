@@ -64,5 +64,14 @@
       var mainPinYValue = parseInt(mainPin.style.top, 10) + mainPinHeight;
       addressField.value = mainPinXValue + ', ' + mainPinYValue;
     },
+
+    resetForm: function () {
+      postForm.reset();
+    },
   };
+
+  postForm.addEventListener('submit', function (evt) {
+    window.backend.save(new FormData(postForm));
+    evt.preventDefault();
+  });
 })();

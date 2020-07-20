@@ -24,11 +24,19 @@
     return pin;
   }
 
-  window.renderPins = function (pins) {
+  window.removePins = function () {
     var oldPins = map.querySelectorAll('.map__pin:not(.map__pin--main)');
     oldPins.forEach(function (item) {
       item.remove();
     });
+  };
+
+  window.renderPins = function (pins) {
+    // var oldPins = map.querySelectorAll('.map__pin:not(.map__pin--main)');
+    // oldPins.forEach(function (item) {
+    //   item.remove();
+    // });
+    window.removePins();
 
     var NUMBER_OF_PINS = (pins.length >= MAX_NUMBER_OF_PINS) ? MAX_NUMBER_OF_PINS : pins.length;
 

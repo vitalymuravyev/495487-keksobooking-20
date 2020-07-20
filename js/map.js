@@ -107,5 +107,9 @@
         activateMap();
       }
     },
+
+    mainPinDefaultX: mainPin.style.left,
+
+    mainPinDefaultY: mainPin.style.top,
   };
 })();
