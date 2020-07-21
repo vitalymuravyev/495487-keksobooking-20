@@ -8,7 +8,7 @@
   var mainPin = map.querySelector('.map__pin--main');
   var mainPinWidth = mainPin.offsetWidth;
   var mainPinHeight = mainPin.offsetHeight;
-  var housingType = document.querySelector('#housing-type');
+  var filtersForm = document.querySelector('.map__filters');
 
   var newPins = [];
 
@@ -86,11 +86,8 @@
     mainPin.addEventListener('mousedown', onMainPinMove);
   }
 
-  housingType.addEventListener('change', function (evt) {
-    var newArr = newPins.slice().filter(function (item) {
-      return item.offer.type === evt.target.value;
-    });
-    addPins(newArr);
+  filtersForm.addEventListener('change', function () {
+    window.debounce(addPins(window.filterAds(newPins)));
   });
 
   window.map = {
