@@ -9,14 +9,24 @@
   var mainPinWidth = mainPin.offsetWidth;
   var mainPinHeight = mainPin.offsetHeight;
   var housingType = document.querySelector('#housing-type');
+  var roomsNumber = postForm.querySelector('#room_number');
+  var capacity = postForm.querySelector('#capacity');
+  var checkinn = postForm.querySelector('#timein');
+  var checkout = postForm.querySelector('#timeout');
+  var type = postForm.querySelector('#type');
+  var titleInput = postForm.querySelector('#title');
+  var mapFilterForm = document.querySelector('.map__filters');
+  var mapFilterFormFields = mapFilterForm.children;
 
   var newPins = [];
 
   function addPins(data) {
-    window.renderPins(data);
+    window.render.removePins();
+    window.render.renderPins(data);
   }
 
   function successHandler(data) {
+    window.form.enableFormElements(mapFilterFormFields);
     newPins = data.slice();
     addPins(newPins);
   }
@@ -84,6 +94,30 @@
     window.backend.load(successHandler);
 
     mainPin.addEventListener('mousedown', onMainPinMove);
+
+    titleInput.addEventListener('invalid', function () {
+      if (titleInput.validity.valueMissing) {
+        titleInput.setCustomValidity('Обязательное поле');
+      } else if (titleInput.validity.tooShort) {
+        titleInput.setCustomValidity('Минимум 30 символов');
+      } else if (titleInput.validity.tooLong) {
+        titleInput.setCustomValidity('Не более 100 символов');
+      } else {
+        titleInput.setCustomValidity('');
+      }
+    });
+    capacity.addEventListener('change', window.form.changeRoomsCapacity);
+
+    roomsNumber.addEventListener('change', window.form.changeRoomsCapacity);
+
+    checkinn.addEventListener('change', function () {
+      checkout.value = checkinn.value;
+    });
+    checkout.addEventListener('change', function () {
+      checkinn.value = checkout.value;
+    });
+
+    type.addEventListener('change', window.form.changePricePlaceholder);
   }
 
   housingType.addEventListener('change', function (evt) {
