@@ -24,12 +24,14 @@
     return pin;
   }
 
-  window.renderPins = function (pins) {
+  function removePins() {
     var oldPins = map.querySelectorAll('.map__pin:not(.map__pin--main)');
     oldPins.forEach(function (item) {
       item.remove();
     });
+  }
 
+  function renderPins(pins) {
     var NUMBER_OF_PINS = (pins.length >= MAX_NUMBER_OF_PINS) ? MAX_NUMBER_OF_PINS : pins.length;
 
     var fragment = document.createDocumentFragment();
@@ -38,6 +40,11 @@
       fragment.appendChild(renderPin(pins[n]));
     }
     mapPins.appendChild(fragment);
+  }
+
+  window.render = {
+    removePins: removePins,
+    renderPins: renderPins,
   };
 
 })();

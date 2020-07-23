@@ -8,7 +8,7 @@
   var housingType = document.querySelector('#housing-type');
   var housingPrice = filtersForm.querySelector('#housing-price');
   var housingRooms = filtersForm.querySelector('#housing-rooms');
-  var housingGuests = filtersForm.querySelector('#housing-guests');;
+  var housingGuests = filtersForm.querySelector('#housing-guests');
   var checkboxWiFi = filtersForm.querySelector('#filter-wifi');
   var checkboxDishwasher = filtersForm.querySelector('#filter-dishwasher');
   var checkboxParking = filtersForm.querySelector('#filter-parking');
@@ -20,24 +20,15 @@
 
 
   function isHouseTypeMatched(item) {
-    if (filters.type === 'any' || item.offer.type === filters.type) {
-      return true;
-    }
-    return false;
+    return filters.type === 'any' || item.offer.type === filters.type;
   }
 
   function isRoomsQuantityMatched(item) {
-    if (filters.rooms === 'any' || item.offer.rooms === +filters.rooms) {
-      return true;
-    }
-    return false;
+    return filters.rooms === 'any' || item.offer.rooms === +filters.rooms;
   }
 
   function isGuestsQuantityMatched(item) {
-    if (filters.guests === 'any' || item.offer.guests === +filters.guests) {
-      return true;
-    }
-    return false;
+    return filters.guests === 'any' || item.offer.guests === +filters.guests;
   }
 
   function isPriceMatched(item) {
@@ -72,7 +63,7 @@
     return false;
   }
 
-  function filterAds (newPins) {
+  function filterAds(newPins) {
     filters = {
       type: housingType.value,
       price: housingPrice.value,
