@@ -31,38 +31,56 @@
     'palace': 10000,
   };
 
+  function changeRoomsCapacity() {
+    if (capacity.value > roomsCapacity[roomsNumber.value]) {
+      capacity.setCustomValidity(roomsCapacityError[roomsNumber.value]);
+    } else if (roomsNumber.value === '100' && capacity.value > roomsCapacity[roomsNumber.value]) {
+      capacity.setCustomValidity(roomsCapacityError[roomsNumber.value]);
+    } else {
+      capacity.setCustomValidity('');
+    }
+  }
+
+  function changePricePlaceholder() {
+    price.placeholder = priceMap[type.value];
+  }
+
+  function disableFormElements(formElements) {
+    for (var l = 0; l < formElements.length; l++) {
+      formElements[l].setAttribute('disabled', true);
+    }
+  }
+
+  function enableFormElements(formElements) {
+    for (var m = 0; m < formElements.length; m++) {
+      formElements[m].removeAttribute('disabled');
+    }
+  }
+
+  function changeAdressValue() {
+    var mainPinXValue = parseInt(mainPin.style.left, 10) + Math.floor(mainPinWidth / 2);
+    var mainPinYValue = parseInt(mainPin.style.top, 10) + mainPinHeight;
+    addressField.value = mainPinXValue + ', ' + mainPinYValue;
+  }
+
+  function resetForm() {
+    postForm.reset();
+  }
+
+
+  postForm.addEventListener('submit', function (evt) {
+    window.backend.save(new FormData(postForm));
+    evt.preventDefault();
+  });
+
 
   window.form = {
-    changeRoomsCapacity: function () {
-      if (capacity.value > roomsCapacity[roomsNumber.value]) {
-        capacity.setCustomValidity(roomsCapacityError[roomsNumber.value]);
-      } else if (roomsNumber.value === '100' && capacity.value > roomsCapacity[roomsNumber.value]) {
-        capacity.setCustomValidity(roomsCapacityError[roomsNumber.value]);
-      } else {
-        capacity.setCustomValidity('');
-      }
-    },
-
-    changePricePlaceholder: function () {
-      price.placeholder = priceMap[type.value];
-    },
-
-    disableFormElements: function (formElements) {
-      for (var l = 0; l < formElements.length; l++) {
-        formElements[l].setAttribute('disabled', true);
-      }
-    },
-
-    enableFormElements: function (formElements) {
-      for (var m = 0; m < formElements.length; m++) {
-        formElements[m].removeAttribute('disabled');
-      }
-    },
-
-    changeAdressValue: function () {
-      var mainPinXValue = parseInt(mainPin.style.left, 10) + Math.floor(mainPinWidth / 2);
-      var mainPinYValue = parseInt(mainPin.style.top, 10) + mainPinHeight;
-      addressField.value = mainPinXValue + ', ' + mainPinYValue;
-    },
+    changeRoomsCapacity: changeRoomsCapacity,
+    changePricePlaceholder: changePricePlaceholder,
+    disableFormElements: disableFormElements,
+    enableFormElements: enableFormElements,
+    changeAdressValue: changeAdressValue,
+    resetForm: resetForm,
   };
+
 })();
