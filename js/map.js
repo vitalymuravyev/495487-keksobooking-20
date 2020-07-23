@@ -87,7 +87,7 @@
   }
 
   filtersForm.addEventListener('change', function () {
-    window.debounce(addPins(window.filterAds(newPins)));
+    window.debounce.debounce(addPins(window.filterAds.filterAds(newPins)));
   });
 
   window.map = {
