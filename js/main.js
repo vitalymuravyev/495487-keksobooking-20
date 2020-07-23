@@ -26,7 +26,7 @@
     mainPin.style.left = window.map.mainPinDefaultX;
     mainPin.style.top = window.map.mainPinDefaultY;
     window.form.resetForm();
-    window.main.init();
+    init();
 
   }
 

@@ -8,7 +8,7 @@
   var mainPin = map.querySelector('.map__pin--main');
   var mainPinWidth = mainPin.offsetWidth;
   var mainPinHeight = mainPin.offsetHeight;
-  var housingType = document.querySelector('#housing-type');
+  var filtersForm = document.querySelector('.map__filters');
   var roomsNumber = postForm.querySelector('#room_number');
   var capacity = postForm.querySelector('#capacity');
   var checkinn = postForm.querySelector('#timein');
@@ -120,11 +120,8 @@
     type.addEventListener('change', window.form.changePricePlaceholder);
   }
 
-  housingType.addEventListener('change', function (evt) {
-    var newArr = newPins.slice().filter(function (item) {
-      return item.offer.type === evt.target.value;
-    });
-    addPins(newArr);
+  filtersForm.addEventListener('change', function () {
+    window.debounce.debounce(addPins(window.filterAds.filterAds(newPins)));
   });
 
   window.map = {
