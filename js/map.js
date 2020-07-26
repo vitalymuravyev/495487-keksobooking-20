@@ -17,6 +17,7 @@
   var titleInput = postForm.querySelector('#title');
   var mapFilterForm = document.querySelector('.map__filters');
   var mapFilterFormFields = mapFilterForm.children;
+  var resetButton = postForm.querySelector('.ad-form__reset');
 
   var newPins = [];
 
@@ -118,9 +119,19 @@
     });
 
     type.addEventListener('change', window.form.changePricePlaceholder);
+
+    resetButton.addEventListener('click', function (evt) {
+      evt.preventDefault();
+      window.housingImage.clearImage();
+      window.avatar.clearAvatar();
+      window.main.reInit();
+    });
   }
 
   filtersForm.addEventListener('change', function () {
+    if (map.querySelector('.popup')) {
+      map.querySelector('.popup').classList.add('visually-hidden');
+    }
     window.debounce.debounce(addPins(window.filterAds.filterAds(newPins)));
   });
 

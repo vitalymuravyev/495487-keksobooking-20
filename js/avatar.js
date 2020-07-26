@@ -5,6 +5,10 @@
   var preview = document.querySelector('.ad-form-header__preview img');
   var fileChooser = document.querySelector('.ad-form-header__input');
 
+  function clearAvatar() {
+    preview.src = 'img/muffin-grey.svg';
+  }
+
 
   fileChooser.addEventListener('change', function () {
     var file = fileChooser.files[0];
@@ -25,5 +29,9 @@
 
     }
   });
+
+  window.avatar = {
+    clearAvatar: clearAvatar,
+  };
 
 })();

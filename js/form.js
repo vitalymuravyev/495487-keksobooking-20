@@ -64,6 +64,8 @@
   }
 
   function resetForm() {
+    window.housingImage.clearImage();
+    window.avatar.clearAvatar();
     postForm.reset();
   }
 

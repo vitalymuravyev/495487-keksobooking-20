@@ -41,8 +41,8 @@
   }
 
   function makeAdCard(ad) {
-    if (map.querySelector('.popup')) {
-      var card = map.querySelector('.popup');
+    var card = map.querySelector('.popup');
+    if (card) {
       card.classList.remove('visually-hidden');
     } else {
       card = cardTemplate.cloneNode(true);
