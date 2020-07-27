@@ -63,7 +63,7 @@
     return false;
   }
 
-  function filterAds(newPins) {
+  function filter(newPins) {
     filters = {
       type: housingType.value,
       price: housingPrice.value,
@@ -96,7 +96,7 @@
   }
 
   window.filterAds = {
-    filterAds: filterAds,
+    filter: filter,
   };
 
 })();

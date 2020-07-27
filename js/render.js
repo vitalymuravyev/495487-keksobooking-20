@@ -19,7 +19,8 @@
     pin.querySelector('img').alt = post.offer.title;
 
     pin.addEventListener('click', function () {
-      window.adCard.makeAdCard(post);
+      pin.classList.add('map__pin--active');
+      window.offerCard.makeOfferCard(post);
     });
     return pin;
   }
@@ -36,8 +37,8 @@
 
     var fragment = document.createDocumentFragment();
 
-    for (var n = 0; n < NUMBER_OF_PINS; n++) {
-      fragment.appendChild(renderPin(pins[n]));
+    for (var i = 0; i < NUMBER_OF_PINS; i++) {
+      fragment.appendChild(renderPin(pins[i]));
     }
     mapPins.appendChild(fragment);
   }

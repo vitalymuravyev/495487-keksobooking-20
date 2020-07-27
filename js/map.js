@@ -18,6 +18,8 @@
   var mapFilterForm = document.querySelector('.map__filters');
   var mapFilterFormFields = mapFilterForm.children;
   var resetButton = postForm.querySelector('.ad-form__reset');
+  var avatarChooser = document.querySelector('.ad-form-header__input');
+  var houseImageChooser = document.querySelector('.ad-form__input');
 
   var newPins = [];
 
@@ -30,6 +32,19 @@
     window.form.enableFormElements(mapFilterFormFields);
     newPins = data.slice();
     addPins(newPins);
+  }
+
+  function mouseClick(evt) {
+    var buttonPressed = evt.button;
+    if (buttonPressed === 0) {
+      activateMap();
+    }
+  }
+
+  function enterClick(evt) {
+    if (evt.key === 'Enter') {
+      activateMap();
+    }
   }
 
   function onMainPinMove(evt) {
@@ -89,66 +104,44 @@
     postForm.classList.remove('ad-form--disabled');
     window.form.enableFormElements(postFormFields);
     window.form.changeAdressValue();
-    mainPin.removeEventListener('mousedown', window.map.mouseClick);
+    mainPin.removeEventListener('mousedown', mouseClick);
     mainPin.removeEventListener('keydown', window.map.enterClick);
 
     window.backend.load(successHandler);
 
     mainPin.addEventListener('mousedown', onMainPinMove);
 
-    titleInput.addEventListener('invalid', function () {
-      if (titleInput.validity.valueMissing) {
-        titleInput.setCustomValidity('Обязательное поле');
-      } else if (titleInput.validity.tooShort) {
-        titleInput.setCustomValidity('Минимум 30 символов');
-      } else if (titleInput.validity.tooLong) {
-        titleInput.setCustomValidity('Не более 100 символов');
-      } else {
-        titleInput.setCustomValidity('');
+    titleInput.addEventListener('invalid', window.form.onTitleValidity);
+
+    capacity.addEventListener('change', window.form.onRoomsCapacityChange);
+
+    roomsNumber.addEventListener('change', window.form.onRoomsCapacityChange);
+
+    checkinn.addEventListener('change', window.form.onCheckinnCheckoutChange);
+    checkout.addEventListener('change', window.form.onCheckinnCheckoutChange);
+
+    type.addEventListener('change', window.form.onPricePlaceholderChange);
+
+    avatarChooser.addEventListener('change', window.form.onAvatarChooserChange);
+    houseImageChooser.addEventListener('change', window.form.onHouseImageChooserChange);
+
+    postForm.addEventListener('submit', window.form.onFormSubmit);
+
+    resetButton.addEventListener('click', window.form.onResetButtonClick);
+
+    filtersForm.addEventListener('change', function () {
+      if (map.querySelector('.popup')) {
+        map.querySelector('.popup').classList.add('visually-hidden');
       }
-    });
-    capacity.addEventListener('change', window.form.changeRoomsCapacity);
-
-    roomsNumber.addEventListener('change', window.form.changeRoomsCapacity);
-
-    checkinn.addEventListener('change', function () {
-      checkout.value = checkinn.value;
-    });
-    checkout.addEventListener('change', function () {
-      checkinn.value = checkout.value;
-    });
-
-    type.addEventListener('change', window.form.changePricePlaceholder);
-
-    resetButton.addEventListener('click', function (evt) {
-      evt.preventDefault();
-      window.housingImage.clearImage();
-      window.avatar.clearAvatar();
-      window.main.reInit();
+      window.utils.debounce(addPins(window.filterAds.filter(newPins)));
     });
   }
 
-  filtersForm.addEventListener('change', function () {
-    if (map.querySelector('.popup')) {
-      map.querySelector('.popup').classList.add('visually-hidden');
-    }
-    window.debounce.debounce(addPins(window.filterAds.filterAds(newPins)));
-  });
-
   window.map = {
 
-    mouseClick: function (evt) {
-      var buttonPressed = evt.button;
-      if (buttonPressed === 0) {
-        activateMap();
-      }
-    },
+    mouseClick: mouseClick,
 
-    enterClick: function (evt) {
-      if (evt.key === 'Enter') {
-        activateMap();
-      }
-    },
+    enterClick: enterClick,
 
     mainPinDefaultX: mainPin.style.left,
 

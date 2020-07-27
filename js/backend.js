@@ -2,7 +2,7 @@
 
 (function () {
   var URL_LOAD = 'https://javascript.pages.academy/keksobooking/data';
-  var URL_SAVE = 'https://javascript.pages.academy/keksobooking';
+  var URL_SAVE = 'https://javascript.pages.academy/keksobook1ing';
   var StatusCode = {
     OK: 200
   };
@@ -10,17 +10,19 @@
   var main = document.querySelector('main');
   var map = document.querySelector('.map');
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
-  var errorPopup = errorTemplate.cloneNode(true);
-  var errorPopupText = errorPopup.querySelector('.error__message');
-  var errorPopupButton = errorPopup.querySelector('.error__button');
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
 
   function onDestroyPopup(evt) {
     var elem = evt.target;
     elem.remove();
+    elem.removeEventListener('click', onDestroyPopup);
   }
 
   function onError(errorMessage) {
+    var errorPopup = errorTemplate.cloneNode(true);
+    var errorPopupText = errorPopup.querySelector('.error__message');
+    var errorPopupButton = errorPopup.querySelector('.error__button');
+
     errorPopupText.textContent = errorMessage;
     map.appendChild(errorPopup);
 
