@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  var MIN_Y = 130;
+  var MAX_Y = 630;
 
   var map = document.querySelector('.map');
   var postForm = document.querySelector('.ad-form');
@@ -34,20 +36,20 @@
     addPins(newPins);
   }
 
-  function mouseClick(evt) {
+  function onMainPinClick(evt) {
     var buttonPressed = evt.button;
     if (buttonPressed === 0) {
       activateMap();
     }
   }
 
-  function enterClick(evt) {
+  function onMainPinKeydown(evt) {
     if (evt.key === 'Enter') {
       activateMap();
     }
   }
 
-  function onMainPinMove(evt) {
+  function onMainPinMouseMove(evt) {
     var startCoordinats = {
       x: evt.clientX,
       y: evt.clientY,
@@ -57,8 +59,8 @@
 
       var mainPinMinX = 0 - Math.floor(mainPinWidth / 2);
       var mainPinMaxX = map.offsetWidth - Math.floor(mainPinWidth / 2);
-      var mainPinMinY = 130 - mainPinHeight;
-      var mainPinMaxY = 630 - mainPinHeight;
+      var mainPinMinY = MIN_Y - mainPinHeight;
+      var mainPinMaxY = MAX_Y - mainPinHeight;
 
       var shift = {
         x: startCoordinats.x - moveEvt.clientX,
@@ -99,17 +101,27 @@
     document.addEventListener('mouseup', onMouseUp);
   }
 
+  function onFilterFormChange() {
+    var closeButton = document.querySelector('.popup__close');
+    if (map.querySelector('.popup')) {
+      map.querySelector('.popup').classList.add('visually-hidden');
+      document.removeEventListener('keydown', window.offerCard.onEscPress);
+      closeButton.removeEventListener('click', window.offerCard.onMouseClick);
+    }
+    addPins(window.filterAds.filter(newPins));
+  }
+
   function activateMap() {
     map.classList.remove('map--faded');
     postForm.classList.remove('ad-form--disabled');
     window.form.enableFormElements(postFormFields);
     window.form.changeAdressValue();
-    mainPin.removeEventListener('mousedown', mouseClick);
-    mainPin.removeEventListener('keydown', window.map.enterClick);
+    mainPin.removeEventListener('mousedown', onMainPinClick);
+    mainPin.removeEventListener('keydown', window.map.onMainPinKeydown);
 
     window.backend.load(successHandler);
 
-    mainPin.addEventListener('mousedown', onMainPinMove);
+    mainPin.addEventListener('mousedown', onMainPinMouseMove);
 
     titleInput.addEventListener('invalid', window.form.onTitleValidity);
 
@@ -129,19 +141,15 @@
 
     resetButton.addEventListener('click', window.form.onResetButtonClick);
 
-    filtersForm.addEventListener('change', function () {
-      if (map.querySelector('.popup')) {
-        map.querySelector('.popup').classList.add('visually-hidden');
-      }
-      window.utils.debounce(addPins(window.filterAds.filter(newPins)));
-    });
+    filtersForm.addEventListener('change', onFilterFormChange);
+
   }
 
   window.map = {
 
-    mouseClick: mouseClick,
+    onMainPinClick: onMainPinClick,
 
-    enterClick: enterClick,
+    onMainPinKeydown: onMainPinKeydown,
 
     mainPinDefaultX: mainPin.style.left,
 

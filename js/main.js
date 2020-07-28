@@ -28,8 +28,8 @@
 
     window.form.changeAdressValue();
 
-    mainPin.addEventListener('mousedown', window.map.mouseClick);
-    mainPin.addEventListener('keydown', window.map.enterClick);
+    mainPin.addEventListener('mousedown', window.map.onMainPinClick);
+    mainPin.addEventListener('keydown', window.map.onMainPinKeydown);
   }
 
   function reInit() {

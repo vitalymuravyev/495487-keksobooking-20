@@ -16,6 +16,15 @@
     var elem = evt.target;
     elem.remove();
     elem.removeEventListener('click', onDestroyPopup);
+    document.removeEventListener('keydown', onEscapeClick);
+  }
+
+  function onEscapeClick(evt) {
+    var popup = document.querySelector('.error') || document.querySelector('.success');
+    if (evt.key === 'Escape') {
+      popup.remove();
+    }
+    document.removeEventListener('keydown', onEscapeClick);
   }
 
   function onError(errorMessage) {
@@ -28,13 +37,10 @@
 
     errorPopupButton.addEventListener('click', function () {
       errorPopup.remove();
+      document.removeEventListener('keydown', onEscapeClick);
     });
 
-    document.addEventListener('keydown', function (evt) {
-      if (evt.key === 'Escape') {
-        errorPopup.remove();
-      }
-    });
+    document.addEventListener('keydown', onEscapeClick);
 
     errorPopup.addEventListener('click', onDestroyPopup);
 
@@ -46,11 +52,7 @@
 
     window.main.reInit();
 
-    document.addEventListener('keydown', function (evt) {
-      if (evt.key === 'Escape') {
-        successPopup.remove();
-      }
-    });
+    document.addEventListener('keydown', onEscapeClick);
 
     successPopup.addEventListener('click', onDestroyPopup);
   }

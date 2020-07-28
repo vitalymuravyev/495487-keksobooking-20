@@ -3,6 +3,7 @@
 (function () {
   var LOW_PRICE = 10000;
   var HIGH_PRICE = 50000;
+  var MAX_NUMBER_OF_PINS = 5;
 
   var filtersForm = document.querySelector('.map__filters');
   var housingType = document.querySelector('#housing-type');
@@ -57,10 +58,9 @@
   function isFeatureMatched(checkbox, item) {
     if (!checkbox.checked) {
       return true;
-    } else if (item.offer.features.includes(checkbox.value)) {
-      return true;
+    } else {
+      return item.offer.features.includes(checkbox.value);
     }
-    return false;
   }
 
   function filter(newPins) {
@@ -87,7 +87,7 @@
         filtredPins.push(currentPin);
       }
 
-      if (filtredPins.length === 5) {
+      if (filtredPins.length === MAX_NUMBER_OF_PINS) {
         break;
       }
     }

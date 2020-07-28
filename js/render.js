@@ -19,8 +19,12 @@
     pin.querySelector('img').alt = post.offer.title;
 
     pin.addEventListener('click', function () {
+      var activePin = map.querySelector('.map__pin--active');
+      if (activePin) {
+        activePin.classList.remove('map__pin--active');
+      }
       pin.classList.add('map__pin--active');
-      window.offerCard.makeOfferCard(post);
+      window.offerCard.makeCard(post);
     });
     return pin;
   }
@@ -33,11 +37,11 @@
   }
 
   function renderPins(pins) {
-    var NUMBER_OF_PINS = (pins.length >= MAX_NUMBER_OF_PINS) ? MAX_NUMBER_OF_PINS : pins.length;
+    var numberOfPins = (pins.length >= MAX_NUMBER_OF_PINS) ? MAX_NUMBER_OF_PINS : pins.length;
 
     var fragment = document.createDocumentFragment();
 
-    for (var i = 0; i < NUMBER_OF_PINS; i++) {
+    for (var i = 0; i < numberOfPins; i++) {
       fragment.appendChild(renderPin(pins[i]));
     }
     mapPins.appendChild(fragment);
@@ -45,7 +49,7 @@
 
   window.render = {
     removePins: removePins,
-    renderPins: renderPins,
+    renderPins: window.utils.debounce(renderPins),
   };
 
 })();

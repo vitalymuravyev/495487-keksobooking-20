@@ -64,6 +64,8 @@
       capacity.setCustomValidity(roomsCapacityError[roomsNumber.value]);
     } else if (roomsNumber.value === '100' && capacity.value > roomsCapacity[roomsNumber.value]) {
       capacity.setCustomValidity(roomsCapacityError[roomsNumber.value]);
+    } else if (capacity.value < roomsCapacity[roomsNumber.value]) {
+      capacity.setCustomValidity(roomsCapacityError[roomsNumber.value]);
     } else {
       capacity.setCustomValidity('');
     }
@@ -141,14 +143,14 @@
   }
 
   function disableFormElements(formElements) {
-    for (var l = 0; l < formElements.length; l++) {
-      formElements[l].setAttribute('disabled', true);
+    for (var j = 0; j < formElements.length; j++) {
+      formElements[j].setAttribute('disabled', true);
     }
   }
 
   function enableFormElements(formElements) {
-    for (var m = 0; m < formElements.length; m++) {
-      formElements[m].removeAttribute('disabled');
+    for (var k = 0; k < formElements.length; k++) {
+      formElements[k].removeAttribute('disabled');
     }
   }
 
@@ -167,6 +169,7 @@
     clearHouseImage();
     clearAvatar();
     postForm.reset();
+    onPricePlaceholderChange();
   }
 
   function onFormSubmit(evt) {
