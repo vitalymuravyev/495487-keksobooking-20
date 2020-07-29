@@ -56,11 +56,7 @@
   }
 
   function isFeatureMatched(checkbox, item) {
-    if (!checkbox.checked) {
-      return true;
-    } else {
-      return item.offer.features.includes(checkbox.value);
-    }
+    return !checkbox.checked || item.offer.features.includes(checkbox.value);
   }
 
   function filter(newPins) {

@@ -93,53 +93,46 @@
     changedElement.value = element.value;
   }
 
-  function onAvatarChooserChange() {
-    var file = avatarChooser.files[0];
-    var fileName = file.name.toLowerCase();
+  function readFile(fileChooser, cb) {
+    var files = fileChooser.files;
 
-    var matches = IMAGE_TYPES.some(function (item) {
-      return fileName.endsWith(item);
-    });
+    for (var i = 0; i < files.length; i++) {
+      var file = fileChooser.files[i];
+      var fileName = file.name.toLowerCase();
 
+      var matches = IMAGE_TYPES.some(function (item) {
+        return fileName.endsWith(item);
+      });
+    }
     if (matches) {
       var reader = new FileReader();
 
-      reader.addEventListener('load', function () {
-        avatarPreview.src = reader.result;
-      });
+      reader.addEventListener('load', cb);
 
       reader.readAsDataURL(file);
 
     }
   }
 
+  function onAvatarLoad(evt) {
+    avatarPreview.src = evt.target.result;
+  }
+
+  function onAvatarChooserChange() {
+    readFile(avatarChooser, onAvatarLoad);
+  }
+
+  function onHouseImageLoad(evt) {
+    var preview = document.createElement('img');
+    preview.width = 70;
+    preview.height = 70;
+    preview.alt = 'Фото жилья';
+    preview.src = evt.target.result;
+    houseImagePreviewContainer.appendChild(preview);
+  }
+
   function onHouseImageChooserChange() {
-    var files = houseImageChooser.files;
-
-    for (var i = 0; i < files.length; i++) {
-      var file = houseImageChooser.files[i];
-      var fileName = file.name.toLowerCase();
-
-      var matches = IMAGE_TYPES.some(function (item) {
-        return fileName.endsWith(item);
-      });
-
-      if (matches) {
-        var reader = new FileReader();
-
-        reader.addEventListener('load', function () {
-          var preview = document.createElement('img');
-          preview.width = 70;
-          preview.height = 70;
-          preview.alt = 'Фото жилья';
-          preview.src = reader.result;
-          houseImagePreviewContainer.appendChild(preview);
-        });
-
-        reader.readAsDataURL(file);
-
-      }
-    }
+    readFile(houseImageChooser, onHouseImageLoad);
   }
 
   function disableFormElements(formElements) {

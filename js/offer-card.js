@@ -42,30 +42,33 @@
     return fragment;
   }
 
-  function onMouseClick() {
+  function removePopup() {
     var activePin = map.querySelector('.map__pin--active');
     activePin.classList.remove('map__pin--active');
-    card.classList.add('visually-hidden');
-
+    card.remove();
     document.removeEventListener('keydown', onEscPress);
     closeButton.removeEventListener('click', onMouseClick);
   }
 
+  function onMouseClick() {
+    removePopup();
+  }
+
   function onEscPress(evt) {
-    var activePin = map.querySelector('.map__pin--active');
     if (evt.key === 'Escape') {
-      activePin.classList.remove('map__pin--active');
-      card.classList.add('visually-hidden');
-      document.removeEventListener('keydown', onEscPress);
-      closeButton.removeEventListener('click', onMouseClick);
+      removePopup();
     }
   }
 
   function makeCard(post) {
     card = map.querySelector('.popup');
-    if (!card) {
-      card = cardTemplate.cloneNode(true);
+    // if (!card) {
+    //   card = cardTemplate.cloneNode(true);
+    // }
+    if (card) {
+      card.remove();
     }
+    card = cardTemplate.cloneNode(true);
 
     var photos = card.querySelector('.popup__photos');
     var features = card.querySelector('.popup__features');
@@ -120,11 +123,20 @@
       card.querySelector('.popup__avatar').classList.add('hidden');
     }
 
-    features.innerHTML = '';
-    features.appendChild(createFeatures(post.offer.features));
+    if (post.offer.features.length) {
+      features.innerHTML = '';
+      features.appendChild(createFeatures(post.offer.features));
+    } else {
+      features.classList.add('hidden');
+    }
 
-    photos.innerHTML = '';
-    photos.appendChild(createPhoto(post.offer.photos));
+    if (post.offer.photos.length) {
+      photos.innerHTML = '';
+      photos.appendChild(createPhoto(post.offer.photos));
+    } else {
+      photos.classList.add('hidden');
+    }
+
 
     closeButton.addEventListener('click', onMouseClick);
 
@@ -132,7 +144,7 @@
 
     mapFilters.before(card);
 
-    card.classList.remove('visually-hidden');
+    // card.classList.remove('visually-hidden');
   }
 
   window.offerCard = {
