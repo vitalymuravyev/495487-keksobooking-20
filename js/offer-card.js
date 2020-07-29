@@ -62,9 +62,7 @@
 
   function makeCard(post) {
     card = map.querySelector('.popup');
-    // if (!card) {
-    //   card = cardTemplate.cloneNode(true);
-    // }
+
     if (card) {
       card.remove();
     }
@@ -137,14 +135,12 @@
       photos.classList.add('hidden');
     }
 
-
     closeButton.addEventListener('click', onMouseClick);
 
     document.addEventListener('keydown', onEscPress);
 
     mapFilters.before(card);
 
-    // card.classList.remove('visually-hidden');
   }
 
   window.offerCard = {
